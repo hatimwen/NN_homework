@@ -1,11 +1,10 @@
 #include "NN_BP.h"
 
-
 double sigmoid(double s){
 	return 1 / (1 + exp(s));
 }
 
-double feed_forward_unit(int N, double* w, double* y){
+double feed_forward_unit(int N, double w[], double y[]){
 
 	// It's a neural unit(node) that:
 	// wji_l, yi_l-1(k) --> sj_l(k)
@@ -26,8 +25,11 @@ double feed_forward_unit(int N, double* w, double* y){
 	y_new = sigmoid(s);
 	return y_new;
 }
-
-void feed_forward_layer(int* N, int l, double** W, double* Y, double* Y_new){
+double feed_back_layer(int* N, int l, double (*W)[U_MAX], double* Y, double* Y_new){
+	// Needed for layers except the last layer: yj_l, deltaq_l+1, wqj_l+1
+	
+}
+void feed_forward_layer(int* N, int l, double (*W)[U_MAX], double* Y, double* Y_new){
 	// Building each (hidden) layer with units.
 
 	// Input: 
@@ -46,7 +48,7 @@ void feed_forward_layer(int* N, int l, double** W, double* Y, double* Y_new){
 }
 
 
-void feed_forward_network(int* N, int L, double* X_in, double*** W, double* Y_out){
+void feed_forward_network(int* N, int L, double* X_in, double (*W)[U_MAX][U_MAX], double* Y_out){
 	// This is a whole network combing all of the layers.
 
 	// Input:
@@ -91,4 +93,7 @@ void BP_Learning_Algorithm(int* N, int L, double* X_data, double* Y_out){
 
 	// Secondly, input X_data and compute the outputs Y_out
 	feed_forward_network(N, L, X_data, W_wight, Y_out);
+
+	// Thirdly, Compute Back-Propagation-Errors
+	
 }

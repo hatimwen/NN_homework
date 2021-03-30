@@ -5,7 +5,6 @@ input number: N_0
 output number:N_L
 unit number:N_1~N_L-1
 */
-#include <stdio.h>
 #include "matrix.h"
 #include "NN_BP.h"
 
@@ -23,22 +22,22 @@ int main(){
 	for (int i = 0; i < L_MAX; i++){
 		N[i] = M;
 	}
-	memset(N, M, L_MAX);
 	double Y_out[Y_LENGTH] = { 0 };
 	double X_data[X_LENGTH] = {0};
-	// ================TO DO: X_data = dataloader();=======
+	/* ================TO DO: X_data = dataloader();======= */
+
 	for (int i = 0; i < M_input; i++){
 		printf("%lf\n",X_data[i]);
 	}
 
-	void BP_Learning_Algorithm(N, L, X_data, Y_out);
+	BP_Learning_Algorithm(N, L, X_data, Y_out);
 
 	for (int i = 0; i < N[L]; i++){
-		printf("%d, %d", N[L], L);
+		printf("N[i] = %d,i =  %d", N[i], i);
 		printf("**********************Y_OUT*************\n");
 		printf("%lf\n", Y_out[i]);
 	}
 
-	system("pause");
+	// system("pause");
 	return 0;
 }

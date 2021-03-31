@@ -11,7 +11,7 @@
 #define X_LENGTH 2
 #define Y_LENGTH 2
 #define Learning_Rate 1
-#define ITER_MAX 100
+#define ITER_MAX 1000000
 #define THRESHOLD 0.00001
 // the max number of layer, and N[l] remains the number of the nodes of the 'l' th layer !!!! L_MAX = L +1
 #define L_MAX 3 

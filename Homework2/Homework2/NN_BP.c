@@ -85,11 +85,11 @@ void feed_back_layer(double lr, int* N, int l, double(*YY)[U_MAX], double * Delt
 	double W_delta[U_MAX][U_MAX] = { 0 };
 	for (int j = 1; j <= N[l]; j++){
 		double sum_q = 0;
-		for (int q = 1; q <= N[l + 1]; q++){
+		for (int q = 0; q <= N[l + 1]; q++){
 			sum_q += Delta_1[q] * W[l + 1][q][j];
 		}
 		Delta_0[j] = YY[l][j] * (1.0 - YY[l][j]) * sum_q;
-		for (int i = 1; i <= N[l - 1]; i++){
+		for (int i = 0; i <= N[l - 1]; i++){
 			W_delta[j][i] = Delta_0[j] * YY[l - 1][i];
 			W[l][j][i] += lr * W_delta[j][i];
 		}
@@ -110,17 +110,18 @@ double BP_Learning_Algorithm(double lr, int* N, int L, double(*W_weight)[U_MAX][
 
 	// Secondly, input X_data and compute the outputs YY
 	feed_forward_network(N, L, X_data, W_weight, YY);
-	double loss = fabs(YY[L][1] - D_label[0]);
+	// double loss = fabs(YY[L][1] - D_label[0]);
+	double loss = 0.5 * pow((YY[L][1] - D_label[0]), 2);
 	printf(" X: %.1f, %.1f,", YY[0][1], YY[0][2]);
-	printf(" loss = %lf, est = %lf, gt = %.1f", loss, YY[L][1], D_label[0]);
+	printf(" est = %lf, gt = %.1f", YY[L][1], D_label[0]);
 	// Thirdly, Compute Back-Propagation-Errors
 	// 1) The last layer:
 	double Delta_all[L_MAX][U_MAX] = { 0 };
 	//double Delta_L[U_MAX] = { 0 };
 	double W_delta_L[U_MAX][U_MAX] = { 0 };
-	for (int j = 1; j <= N[L]; j++){
-		Delta_all[L][j] = YY[L][j] * (1.0 - YY[L][j]) * (D_label[j] - YY[L][j]);
-		for (int i = 1; i <= N[L - 1]; i++){
+	for (int j = 1; j <= N[L]; j++){		// N[L] = 1, output layer
+		Delta_all[L][j] = YY[L][j] * (1.0 - YY[L][j]) * (D_label[j-1] - YY[L][j]);
+		for (int i = 0; i <= N[L - 1]; i++){
 			W_delta_L[j][i] = Delta_all[L][j] * YY[L - 1][i];
 			W_weight[L][j][i] += lr * W_delta_L[j][i];
 		}

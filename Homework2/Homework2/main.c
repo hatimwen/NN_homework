@@ -18,7 +18,7 @@ int main(){
 	// The number of each layer's nude is set to 'M'.
 	int M = 2;	
 	// The number of layer is set to 'L'.
-	int L = 2;
+	int L = L_MAX -1;
 	int N[L_MAX], *p_N;
 	p_N = N;
 	for (int i = 0; i < L_MAX; i++){
@@ -34,7 +34,7 @@ int main(){
 	double D_label[Y_LENGTH] = { 0 }, *p_D_label;
 	p_D_label = D_label;
 	/* ================TO DO: X_data = dataloader();======= */
-	double XX_data[4][2] = {{1,0}, {1, 1}, {0, 0}, {0, 1}};
+	double XX_data[4][3] = {{1, 1,0}, {1, 1, 1}, {1, 0, 0}, {1, 0, 1}};
 	double DD_label[4][1] = {{1}, {0}, {0}, {1}};
 
     /* ====================================================*/
@@ -47,8 +47,9 @@ int main(){
 	double loss = 0;
     FILE *p = fopen("./output.txt", "w");
 	for(int l = 1;l<=L;l++){
+		YY[l][0] = 1;
 		for(int j =1;j <= N[l];j++){
-			for(int i = 1; i <= N[l-1]; i++){
+			for(int i = 0; i <= N[l-1]; i++){
 				W_weight[l][j][j] = normal_rand();
 			}
 		}
@@ -57,18 +58,22 @@ int main(){
 		int kk = k%4;
 		p_X_data = XX_data[kk];
 		p_D_label = DD_label[kk];
+		double *p_DD;
+		p_DD = DD_label;
 
 		YY[0][0] = 1;
-		YY[0][1] = p_X_data[0];
-		YY[0][2] = p_X_data[1];
-		printf("iter %d", k);
-		loss = BP_Learning_Algorithm(Learning_Rate, N, L, W_weight, p_X_data, YY, p_D_label);
-		fprintf(p, "%d %lf\n", k, loss);
-		if(loss < THRESHOLD){
-			printf(" Convergence !\n");
-			break;
-		}else{
-			printf("\n");
+		YY[0][1] = p_X_data[1];
+		YY[0][2] = p_X_data[2];
+		printf("\niter %d", k);
+		loss += BP_Learning_Algorithm(Learning_Rate, N, L, W_weight, p_X_data, YY, p_D_label);
+		if(kk == 3){
+			fprintf(p, "%d %lf\n", k/4, loss);
+			printf(" Loss = %lf", loss);
+			if(loss < THRESHOLD){
+				printf("\n******************************Convergence !*************************\n");
+				break;
+			}
+			loss = 0;
 		}
 	}
 
@@ -79,10 +84,10 @@ int main(){
 	// 	printf("%lf\n", Y_out[i]);
 	// }
 
-	printf("##########################THE FINAL WEIGHT:######################\n");
+	printf("\n##########################THE FINAL WEIGHT:######################\n");
 	for(int l = 1;l<=L;l++){
 		for(int j =1;j <= N[l];j++){
-			for(int i = 1; i <= N[l-1]; i++){
+			for(int i = 0; i <= N[l-1]; i++){
 				printf("W%d%d_%d = %lf\n", j, i, l, W_weight[l][j][j]);
 			}
 		}

@@ -9,11 +9,12 @@
 
 #define PI 3.141592654
 #define PRINT_FLAG 0    // The flag deciding whether print or not
+#define PRINT_FLAG_TEST 1    // The flag deciding whether print TEST RESULT or not
 #define X_LENGTH 2
 #define Y_LENGTH 2
 #define Learning_Rate 1
 #define ITER_MAX 10000000
-#define THRESHOLD 0.000001
+#define THRESHOLD 0.0001
 // the max number of layer, and N[l] remains the number of the nodes of the 'l' th layer !!!! L_MAX = L +1
 #define L_MAX 3
 // the max number of neural unit(node) of each layer, which decides the range of i and j !!! U_MAX = U +1

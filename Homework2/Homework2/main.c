@@ -39,7 +39,7 @@ int main(){
 
 
 
-	// One of X_data is taken as Test_data every single big loop(totally 4 big loops), 
+	// One of X_data(e.g. XX_data[cat]) is taken as Test_data every single big loop(totally 4 big loops), 
 	// where the rest data is fed as Train_data
 	for(int cat = 0; cat < K_MAX; cat++){
 		// Firstly, initialize the wights:W
@@ -50,20 +50,21 @@ int main(){
 			for(int j =1;j <= N[l];j++){
 				for(int i = 0; i <= N[l-1]; i++){
 					W_weight[l][j][j] = normal_rand();
+					// W_weight[l][j][j] = 0;
 				}
 			}
 		}
 		loss = 0;
 		// Then, BP starts.
 		int kk = 0, k_print_loss = 0;
-		double *p_DD = NULL;
+		double * p_X_test = NULL;
+		double *p_D_test = NULL;
 		for(int k = 0; k < ITER_MAX; k++){
 			k_print_loss = k%K_TRAIN;
 			// Load X_data and D_label
 			kk = ((k%K_TRAIN) + 1)%K_MAX;
 			p_X_data = XX_data[kk];
 			p_D_label = DD_label[kk];
-			p_DD = DD_label;
 
 			YY[0][0] = 1;
 			YY[0][1] = p_X_data[1];
@@ -73,7 +74,7 @@ int main(){
 			}
 			loss += BP_Learning_Algorithm(Learning_Rate, N, L, W_weight, p_X_data, YY, p_D_label);
 			if(k_print_loss == (K_TRAIN -1)){
-				fprintf(p, "%d %lf\n", k/K_TRAIN, loss);
+				fprintf(p, "%lf\n",loss);
 				if(PRINT_FLAG){
 					printf(" Loss = %lf", loss);
 				}
@@ -94,7 +95,7 @@ int main(){
 		// 	printf("%lf\n", Y_out[i]);
 		// }
 
-		printf("\n############################NO.%d Train##########################\n", cat);
+		printf("\n############################ NO.%d Train ##########################\n", cat);
 		printf("##########################THE FINAL WEIGHT:######################\n");
 		for(int l = 1;l<=L;l++){
 			for(int j =1;j <= N[l];j++){
@@ -104,6 +105,19 @@ int main(){
 			}
 		}
 		// TO DO: Get the result 
+		p_X_test = XX_data[cat];
+		p_D_test = DD_label[cat];
+		for(int l = 1;l<=L;l++){YY[l][0] = 1;}
+		YY[0][0] = 1;
+		YY[0][1] = p_X_test[1];
+		YY[0][2] = p_X_test[2];
+		feed_forward_network(N, L, p_X_test, W_weight, YY);
+		if(PRINT_FLAG_TEST){
+			printf("########################## NO.%d TEST ######################\n", cat);
+			printf(" X: %.1f, %.1f,", YY[0][1], YY[0][2]);
+			printf(" est = %lf, gt = %.1f\n", YY[L][1], p_D_test[0]);
+			printf("#################################################################\n");
+		}
 		printf("#################################################################\n");
 	}
 	system("pause");

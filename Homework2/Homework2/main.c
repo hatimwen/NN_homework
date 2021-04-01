@@ -5,7 +5,6 @@ input number: N_0
 output number:N_L
 unit number:N_1~N_L-1
 */
-#include "matrix.h"
 #include <stdio.h>
 #include "NN_BP.h"
 

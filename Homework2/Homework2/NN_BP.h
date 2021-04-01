@@ -8,16 +8,20 @@
 #include <stdlib.h>
 
 #define PI 3.141592654
+#define PRINT_FLAG 0    // The flag deciding whether print or not
 #define X_LENGTH 2
 #define Y_LENGTH 2
 #define Learning_Rate 1
-#define ITER_MAX 1000000
-#define THRESHOLD 0.00001
+#define ITER_MAX 10000000
+#define THRESHOLD 0.000001
 // the max number of layer, and N[l] remains the number of the nodes of the 'l' th layer !!!! L_MAX = L +1
-#define L_MAX 3 
-
+#define L_MAX 3
 // the max number of neural unit(node) of each layer, which decides the range of i and j !!! U_MAX = U +1
 #define U_MAX 3
+// The max number of samples
+#define K_MAX 4
+// The number of train samples
+#define K_TRAIN 3
 double sigmoid(double s);
 double feed_forward_unit(int N, double w[], double y[]);
 void feed_forward_layer(int* N, int l, double (*W)[U_MAX], double* Y, double* Y_new);

@@ -112,8 +112,10 @@ double BP_Learning_Algorithm(double lr, int* N, int L, double(*W_weight)[U_MAX][
 	feed_forward_network(N, L, X_data, W_weight, YY);
 	// double loss = fabs(YY[L][1] - D_label[0]);
 	double loss = 0.5 * pow((YY[L][1] - D_label[0]), 2);
-	printf(" X: %.1f, %.1f,", YY[0][1], YY[0][2]);
-	printf(" est = %lf, gt = %.1f", YY[L][1], D_label[0]);
+	if(PRINT_FLAG){
+		printf(" X: %.1f, %.1f,", YY[0][1], YY[0][2]);
+		printf(" est = %lf, gt = %.1f", YY[L][1], D_label[0]);
+	}
 	// Thirdly, Compute Back-Propagation-Errors
 	// 1) The last layer:
 	double Delta_all[L_MAX][U_MAX] = { 0 };

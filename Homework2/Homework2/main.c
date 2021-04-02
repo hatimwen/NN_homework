@@ -32,8 +32,8 @@ int main(){
 	double loss = 0;
 	char filename[14];
 	/* ===================X_data and D_label Samples======= */
-	double XX_data[K_MAX][3] = {{1, 1, 0}, {1, 1, 1}, {1, 0, 0}, {1, 0, 1}};
-	double DD_label[K_MAX][1] = {{1}, {0}, {0}, {1}};
+	double XX_data[K_MAX][X_LENGTH + 1] = {{1, 1, 0}, {1, 1, 1}, {1, 0, 0}, {1, 0, 1}};
+	double DD_label[K_MAX][Y_LENGTH] = {{1}, {0}, {0}, {1}};
     /* ====================================================*/
 
 

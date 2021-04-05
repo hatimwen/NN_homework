@@ -29,8 +29,9 @@ int main(){
 	double loss = 0;
 	char filename[19];
 	/* ===================X_data and D_label Samples======= */
-	double XX_data[K_MAX][X_LENGTH + 1];// = {{1, 1, 0}, {1, 1, 1}, {1, 0, 0}, {1, 0, 1}};
-	double DD_label[K_MAX][Y_LENGTH];// = {{1}, {0}, {0}, {1}};
+	double XX_data[K_MAX][X_LENGTH + 1] = {{1, 1, 0}, {1, 1, 1}, {1, 0, 0}, {1, 0, 1}};
+	double DD_label[K_MAX][Y_LENGTH] = {{1}, {0}, {0}, {1}};
+	/*
 	FILE *p_data;
 	p_data = fopen("./Parity_Check_data_8.txt", "r");
 	if(p_data==NULL)    //打开文件失败
@@ -56,6 +57,7 @@ int main(){
 
 	}
 	fclose(p_data);
+	*/
     /* ====================================================*/
 
 
@@ -64,7 +66,7 @@ int main(){
 	// where the rest data is fed as Train_data
 	// for(int cat = K_MAX -1; cat < K_MAX; cat++){
 		// Firstly, initialize the wights:W
-		sprintf(filename, "output_8_train.txt");
+		sprintf(filename, "output_2_train.txt");
 		FILE *pf = fopen(filename, "w");
 		for(int l = 1;l<=L;l++){
 			YY[l][0] = 1;

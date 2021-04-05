@@ -32,7 +32,7 @@ int main(){
 	double XX_data[K_MAX][X_LENGTH + 1];// = {{1, 1, 0}, {1, 1, 1}, {1, 0, 0}, {1, 0, 1}};
 	double DD_label[K_MAX][Y_LENGTH];// = {{1}, {0}, {0}, {1}};
 	FILE *p_data;
-	p_data = fopen("./Parity_Check_data_7.txt", "r");
+	p_data = fopen("./Parity_Check_data_8.txt", "r");
 	if(p_data==NULL)    //打开文件失败
 		{  
 			printf("File cannot open! ");
@@ -64,7 +64,7 @@ int main(){
 	// where the rest data is fed as Train_data
 	// for(int cat = K_MAX -1; cat < K_MAX; cat++){
 		// Firstly, initialize the wights:W
-		sprintf(filename, "output_7_train.txt");
+		sprintf(filename, "output_8_train.txt");
 		FILE *pf = fopen(filename, "w");
 		for(int l = 1;l<=L;l++){
 			YY[l][0] = 1;

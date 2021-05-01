@@ -6,8 +6,8 @@ from tqdm import tqdm
 
 Nc = 512
 L = 9
-epoch_max = 1000
-lr = 0.1
+epoch_max = 10000
+lr = 0.01
 
 def getvector(img):
     # pad
@@ -42,10 +42,13 @@ def train(img):
             q = np.argmin(D)
             # update Wq:
             W[q] += lr * (X_train[k] - W[q])
-            dis = np.sum(np.sqrt((W - Last_W)**2))
-            Last_W = W.copy()
-            if k%1000 == 0:
-                print('epoch{0} idx = {1} dis = {2}'.format(epoch, k, dis))
+            # dis = np.sum(np.sqrt((W - Last_W)**2))
+            # Last_W = W.copy()
+            # if k%1000 == 0:
+            #     print('epoch{0} idx = {1} dis = {2}'.format(epoch, k, dis))
+        dis = np.sum(np.sqrt((W - Last_W)**2))
+        Last_W = W.copy()
+        print('epoch{0} dis = {1}'.format(epoch, dis))
         if dis == 0.:
             break
     return W
@@ -58,9 +61,14 @@ def test(img_in, W):
     for i in range(D.shape[0]):
         q = np.argmin(D[i])
         X_test_out[i] = W[q]
-    img_out = decode(X_test_out)
-    mse = np.sum(img_in - img_out) / (256.**2)
-    psnr = 10 * np.log10(255**2 / mse)
+    img_out = decode(X_test_out).astype(np.float32)
+    img_in =  img_in.astype(np.float32)
+    mse = np.sum((img_in - img_out)**2) / (256.**2)
+    # if mse == np.average(np.power(img_in - img_out, 2)):
+    #     print('Yes')
+    # else:
+    #     print('No!')
+    psnr = 10 * np.log10(255.**2 / mse)
     return img_out, psnr
 
 
